@@ -1,6 +1,6 @@
 package fakeStoreApi;
 
-import CreateRequest.AllCartsRequests;
+import CreateRequest.AllCartRequests;
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Tag;
@@ -21,7 +21,7 @@ public class SanityTests implements CONSTANT_VALIDATION {
     public void clearList() {
         clearLists(ids, userIds, cartDates, productIds, productQuantity);
     }
-    private final AllCartsRequests assertCart = new AllCartsRequests();
+    private final AllCartRequests assertCart = new AllCartRequests();
     public final Logger logger = LoggerFactory.getLogger(SanityTests.class);
     @Test
     public void testAllCarts() {

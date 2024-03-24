@@ -10,6 +10,12 @@ public interface CONSTANT_VALIDATION {
     List<Integer> productIds = new ArrayList<>();
     List<Integer> productQuantity = new ArrayList<>();
 
+    /**
+     * Clears the given lists.
+     *
+     * @param  lists  the lists to be cleared
+     */
+
     default void clearLists(List<?>... lists) {
         for (List<?> list : lists) {
             list.clear();

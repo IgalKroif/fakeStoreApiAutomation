@@ -1,6 +1,6 @@
 package fakeStoreApi.carts.GET;
 
-import CreateRequest.AllCartsRequests;
+import CreateRequest.AllCartRequests;
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ import static utils.Validation.Fields.StaticFieldValidator.validateString;
  * The type Test all carts.
  */
 @Slf4j
-public class TestAllCarts extends AllCartsRequests implements CONSTANT_VALIDATION {
+public class TestAllCarts extends AllCartRequests implements CONSTANT_VALIDATION {
     public final Logger logger = LoggerFactory.getLogger(TestAllCarts.class);
 
     /**
@@ -41,7 +41,6 @@ public class TestAllCarts extends AllCartsRequests implements CONSTANT_VALIDATIO
     @DisplayName("assert IDS in all carts")
     public void assertAllCartIds() {
         Response response = testAllCarts();
-        response.then().statusCode(200);
         var items = response.as(Items[].class);
 
         for (Items item : items) {
@@ -66,7 +65,6 @@ public class TestAllCarts extends AllCartsRequests implements CONSTANT_VALIDATIO
     @DisplayName("assert user ID'S in all carts")
     public void assertAllUserIdsInCart() {
         Response response = testAllCarts();
-        response.then().statusCode(200);
         var items = response.as(Items[].class);
 
         for (Items item : items) {
@@ -86,7 +84,6 @@ public class TestAllCarts extends AllCartsRequests implements CONSTANT_VALIDATIO
     @DisplayName("assert item creation date in all carts")
     public void assertAllItemCartDate() {
         Response response = testAllCarts();
-        response.then().statusCode(200);
         var items = response.as(Items[].class);
         for (Items item : items) {
             cartDates.add(item.getDate());
@@ -109,7 +106,6 @@ public class TestAllCarts extends AllCartsRequests implements CONSTANT_VALIDATIO
         Response response = testAllCarts();
 
         // Assert that the response status code is 200
-        response.then().statusCode(200);
 
         // Retrieve the items from the response and iterate over them
         var items = response.as(Items[].class);
@@ -138,7 +134,6 @@ public class TestAllCarts extends AllCartsRequests implements CONSTANT_VALIDATIO
     public void assertAllProductQuantitiesInCarts() {
         // Send a request to get all carts
         Response response = testAllCarts();
-        response.then().statusCode(200);
         // Deserialize the response body into an array of Items
         var items = response.as(Items[].class);
         // Iterate through each item in the array

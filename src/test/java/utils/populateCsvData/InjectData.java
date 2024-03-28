@@ -1,26 +1,24 @@
 package utils.populateCsvData;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.testng.annotations.BeforeTest;
 
 public class InjectData {
+
     /**
-     * A description of the entire Java function.
+     * Populates valid IDs from a CSV file.
      *
-     * @param  id	description of parameter
-     * @return         	description of return value
+     * @param id - the ID to be populated
+     * @return the populated ID
      */
     @BeforeTest
-    @ParameterizedTest
-    @CsvFileSource(resources = "/CSVS/CART_IDS.csv", numLinesToSkip = 1)
-    public static Integer populateValidIds(int id) {
-        return id;
-    }
-     @BeforeTest
-    @ParameterizedTest
-    @CsvFileSource(resources = "/CSVS/CART_IDS.csv", numLinesToSkip = 1)
-    public static Object populateInvalidIds(Object id) {
-        return id;
-    }
+    public static Integer populateValidIds(int id) {return id;}
+
+    /**
+     * This method populates invalid IDs from a CSV file.
+     *
+     * @param id The ID to be populated.
+     * @return The populated ID.
+     */
+    @BeforeTest
+    public static Object populateInvalidIds(Object id) {return id;}
 }

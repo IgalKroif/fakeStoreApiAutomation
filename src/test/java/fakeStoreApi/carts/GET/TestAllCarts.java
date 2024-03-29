@@ -11,12 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import utils.CONSTANTS.CONSTANT_VALIDATION;
-import utils.POJO.allCarts.Items;
-import utils.POJO.allCarts.Product;
+import utils.POJO.cart.Items;
+import utils.POJO.cart.Product;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static utils.Validation.Fields.StaticFieldValidator.validateInt;
-import static utils.Validation.Fields.StaticFieldValidator.validateString;
+import static utils.validation.Fields.StaticFieldValidator.validateInt;
+import static utils.validation.Fields.StaticFieldValidator.validateString;
 
 /**
  * The type Test all carts.

@@ -1,4 +1,4 @@
-package utils.Validation.Errors;
+package utils.validation.Errors;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

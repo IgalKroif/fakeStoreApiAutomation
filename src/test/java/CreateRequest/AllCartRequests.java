@@ -14,7 +14,9 @@ import java.util.concurrent.TimeUnit;
 import static Routes.RouteCartEndPoint.allCarts;
 import static Routes.RouteCartEndPoint.cartById;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static utils.validation.Header.validateHeaders.validateHeaderResponseData;
 import static utils.populateCsvData.InjectData.populateInvalidIds;
 import static utils.populateCsvData.InjectData.populateValidIds;
 
@@ -59,6 +61,7 @@ public class AllCartRequests implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
         response.then().time(lessThan(3L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         response.then().body(SINGLE_CART_SCHEMA);
+        validateHeaderResponseData(response);
         return response;
     }
     public Response testInvalidSpecificCart(Object id) {
@@ -67,10 +70,15 @@ public class AllCartRequests implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
                 .spec(getRequestSpec())
                 .when()
                 .get(cartById);
-        //response.then().spec(getResponseSpec());
         response.then().time(lessThan(3L), TimeUnit.SECONDS);
-        response.then().log().body().and().log().status();
-       // response.then().statusCode(200);
+        response.then().log().status().and().statusCode(is(oneOf(200,400)));
+        response.then().log().headers();
+        var statusCode = response.getStatusCode();
+        if (statusCode == 200) {
+            var responseBody = response.getBody().asPrettyString();
+            assertThat(responseBody, is(nullValue().toString()));
+            System.out.println("ResponseBody is: " + responseBody + " As expected because of invalid ID: " + id);
+        }
         return response;
     }
 }

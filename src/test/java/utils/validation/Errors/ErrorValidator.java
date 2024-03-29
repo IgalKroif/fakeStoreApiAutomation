@@ -1,4 +1,4 @@
-package utils.Validation.Errors;
+package utils.validation.Errors;
 
 public class ErrorValidator {
 

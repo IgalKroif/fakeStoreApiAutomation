@@ -1,6 +1,5 @@
-package utils.Validation.dataFaker;
+package utils.validation.dataRandomizer;
 
-import org.junit.jupiter.api.Test;
 import utils.CONSTANTS.CONSTANTS;
 
 import java.util.Arrays;

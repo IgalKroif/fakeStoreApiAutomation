@@ -1,10 +1,10 @@
-package utils.Validation.Fields;
+package utils.validation.Fields;
 
 import utils.CONSTANTS.CONSTANT_VALIDATION;
-import utils.POJO.allCarts.Items;
-import utils.POJO.allCarts.Product;
+import utils.POJO.cart.Items;
+import utils.POJO.cart.Product;
 
-import static utils.Validation.Fields.StaticFieldValidator.validateInt;
+import static utils.validation.Fields.StaticFieldValidator.validateInt;
 
 public class ExtractAllCartItems implements CONSTANT_VALIDATION {
     public Items[] extractAllCarts(Items[] items) {

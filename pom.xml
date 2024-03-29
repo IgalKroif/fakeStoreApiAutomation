@@ -180,40 +180,48 @@
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>2.17.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.23.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.23.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>2.23.1</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Configure Maven Surefire Plugin for parallel test execution -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <groups>
-                        <!-- Specify the tags to include -->
-                        <include>fast</include>
-                    </groups>
+                    <!-- Enable parallel test execution -->
+                    <parallel>methods</parallel> <!-- or "classes" -->
+                    <!-- Set the number of threads for parallel execution -->
+                    <threadCount>2</threadCount> <!-- specify the number of threads -->
+                    <runOrder>alphabetical</runOrder>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <reportFormat>csv</reportFormat>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!-- Other plugins in your build configuration -->
         </plugins>
     </build>
+
 </project>

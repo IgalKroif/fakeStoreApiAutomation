@@ -1,4 +1,4 @@
-package utils.Validation.Fields;
+package utils.validation.Fields;
 
 public class StaticFieldValidator {
     /**

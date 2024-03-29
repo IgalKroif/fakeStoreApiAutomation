@@ -1,14 +1,15 @@
-package utils.Validation.Header;
+package utils.validation.Header;
 
 import io.restassured.response.Response;
+import utils.CONSTANTS.CONSTANTS;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.TimeZone;
 
-public class validateHeaders {
+import static org.hamcrest.Matchers.matchesPattern;
+
+public class validateHeaders implements CONSTANTS {
     public static void validateHeaderResponseData(Response response) {
-        SimpleDateFormat gmtDateFormat = findGmtTime();
         response.then()
                 .headers("Content-Type", "application/json; charset=utf-8")
                 .and()
@@ -18,7 +19,7 @@ public class validateHeaders {
                 .and()
                 .headers("Server", "cloudflare")
                 .and()
-                .headers("Date", gmtDateFormat.format(new Date()));
+                .header("Date", matchesPattern(headerDatePattern));
     }
 
     public static SimpleDateFormat findGmtTime() {

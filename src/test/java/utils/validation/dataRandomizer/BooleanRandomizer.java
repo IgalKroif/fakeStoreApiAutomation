@@ -1,4 +1,4 @@
-package utils.Validation.dataFaker;
+package utils.validation.dataRandomizer;
 
 import utils.CONSTANTS.CONSTANTS;
 

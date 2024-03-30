@@ -10,9 +10,9 @@ import io.restassured.specification.RequestSpecification;
 public interface REQ_SPEC {
     default RequestSpecification getRequestSpec() {
         HttpClientConfig httpClientConfig = HttpClientConfig.httpClientConfig()
-                .setParam("http.connection.timeout", 1000)
-                .setParam( "http.receive.timeout", 1000)
-                .setParam("http.socket.timeout", 1000);
+                .setParam("http.connection.timeout", 6000)
+                .setParam( "http.receive.timeout", 6000)
+                .setParam("http.socket.timeout", 6000);
 
         RestAssuredConfig restAssuredConfig = RestAssuredConfig.config()
                 .httpClient(httpClientConfig)

@@ -2,6 +2,8 @@ package utils.validation.dataRandomizer;
 
 import utils.CONSTANTS.CONSTANTS;
 
+import static CreateRequest.AllCartRequests.faker;
+
 public class NumberRandomizer implements CONSTANTS {
 
     public static int generateRandInt() {

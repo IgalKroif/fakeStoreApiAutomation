@@ -212,12 +212,18 @@
                 <version>3.0.0-M5</version>
                 <configuration>
                     <!-- Enable parallel test execution -->
-                    <parallel>methods</parallel> <!-- or "classes" -->
+                    <parallel>classes</parallel> <!-- or "classes" -->
                     <!-- Set the number of threads for parallel execution -->
-                    <threadCount>2</threadCount> <!-- specify the number of threads -->
-                    <runOrder>alphabetical</runOrder>
+                    <threadCount>1</threadCount> <!-- specify the number of threads -->
+                    <runOrder>balanced</runOrder>
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                     <reportFormat>csv</reportFormat>
+                    <enableAssertions>true</enableAssertions>
+                    <detail>true</detail>
+                    <parallelOptimized>true</parallelOptimized>
+                    <runOrder>filesystem</runOrder>
+                    <properties>junit.jupiter.execution.parallel.enabled>true</properties>
+                    <parallelMavenExecution>true</parallelMavenExecution>
                 </configuration>
             </plugin>
             <!-- Other plugins in your build configuration -->

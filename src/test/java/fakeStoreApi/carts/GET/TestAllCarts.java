@@ -3,14 +3,14 @@ package fakeStoreApi.carts.GET;
 import CreateRequest.AllCartRequests;
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
-import utils.CONSTANTS.CONSTANT_VALIDATION;
+import org.testng.annotations.AfterTest;
+import utils.CONSTANTS.CONSTANTS;
 import utils.POJO.cart.Items;
 import utils.POJO.cart.Product;
 
@@ -22,8 +22,9 @@ import static utils.validation.Fields.StaticFieldValidator.validateString;
  * The type Test all carts.
  */
 @Slf4j
-public class TestAllCarts extends AllCartRequests implements CONSTANT_VALIDATION {
+public class TestAllCarts extends AllCartRequests implements CONSTANTS {
     public final Logger logger = LoggerFactory.getLogger(TestAllCarts.class);
+
 
     /**
      * Clears the lists of ids, userIds, cartDates, productIds, and productQuantity.
@@ -49,6 +50,70 @@ public class TestAllCarts extends AllCartRequests implements CONSTANT_VALIDATION
             validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
         }
         logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+    }
+
+    /**
+     * This method asserts the IDs in all carts and validates the sort and limit parameters.
+     * It uses a parameterized test with different limit values.
+     *
+     * @param limitParam The limit parameter to test.
+     */
+    @ParameterizedTest()
+    @ValueSource(ints = {100,8,7,6,5,4,3,2,1,0,-1})
+    @Tags({@Tag("Carts"), @Tag("CartId")})
+    @DisplayName("Assert Descending queryParameter")
+    public void assertDescSortAndLimitCartParams(int limitParam) {
+        // Call the testAllCarts method with the specified parameters
+        Response response = testAllCarts(byDesc, limitParam);
+
+        // Parse the response as an array of Items
+        var items = response.as(Items[].class);
+
+        // Iterate over the items and perform assertions and validations
+        for (Items item : items) {
+            ids.add(item.getId());
+            assertThat(item.getId()).isGreaterThan(0);
+            validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
+        }
+        // Validate the order of the IDs
+        validateInt().intGreaterEqualTo(ids.get(0), ids.get(ids.size() - 1));
+        // Log the IDs and the size of the ID array
+        logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+
+        // Clear the list of IDs
+        clearList();
+    }
+
+    /**
+     * This test method asserts the IDS in all carts and validates the sort and limit parameters.
+     *
+     * @param limitParam The limit parameter for the test.
+     */
+    @ParameterizedTest()
+    @ValueSource(ints = {-1 ,0, 1, 2, 3, 4, 5, 6, 7, 8, 50000})
+    @Tags({@Tag("Carts"), @Tag("CartId")})
+    @DisplayName("Assert Ascending queryParameter")
+
+    public void assertAscSortAndLimitCartParams(int limitParam) {
+        // Call testAllCarts method with specified sort and limit parameters
+        Response response = testAllCarts(byAsc, limitParam);
+        // Convert response to Items array
+        var items = response.as(Items[].class);
+        // Iterate over items and perform assertions
+        for (Items item : items) {
+            // Add ID to the list
+            ids.add(item.getId());
+            // Assert that ID is greater than 0
+            assertThat(item.getId()).isGreaterThan(0);
+            // Validate ID is within specified range
+            validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
+        }
+        // Validate that IDs are in ascending order
+        validateInt().intLessThanEqualTo(ids.get(0), ids.get(ids.size() - 1));
+        // Log the IDs and size of the ID list
+        logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+        // Clear the ID list
+        clearList();
     }
 
     /**

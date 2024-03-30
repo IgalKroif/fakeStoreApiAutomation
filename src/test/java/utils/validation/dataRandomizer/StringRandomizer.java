@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import static CreateRequest.AllCartRequests.faker;
+
 public class StringRandomizer implements CONSTANTS {
 
     public String generateRandStringName() {

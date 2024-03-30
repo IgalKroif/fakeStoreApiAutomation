@@ -9,9 +9,9 @@ import io.restassured.specification.ResponseSpecification;
 public class SpecifyResponse {
     public static ResponseSpecification getResponseSpec() {
         HttpClientConfig httpClientConfig = HttpClientConfig.httpClientConfig()
-                .setParam("http.connection.timeout", 2000)
-                .setParam("http.receive.timeout", 2000)
-                .setParam("http.socket.timeout", 2000);
+                .setParam("http.connection.timeout", 6000)
+                .setParam("http.receive.timeout", 6000)
+                .setParam("http.socket.timeout", 6000);
 
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)

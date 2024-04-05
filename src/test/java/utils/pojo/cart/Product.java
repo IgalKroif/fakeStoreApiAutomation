@@ -1,4 +1,4 @@
-package utils.POJO.cart;
+package utils.pojo.cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
-    private int productId;
-    private int quantity;
+    private Object productId;
+    private Object quantity;
 }

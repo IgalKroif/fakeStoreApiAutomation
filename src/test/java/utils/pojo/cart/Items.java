@@ -1,4 +1,4 @@
-package utils.POJO.cart;
+package utils.pojo.cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

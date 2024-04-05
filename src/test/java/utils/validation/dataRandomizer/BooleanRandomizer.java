@@ -2,7 +2,7 @@ package utils.validation.dataRandomizer;
 
 import utils.CONSTANTS.CONSTANTS;
 
-import static CreateRequest.AllCartRequests.faker;
+import static CreateRequest.GetCartRequest.faker;
 
 public class BooleanRandomizer implements CONSTANTS {
 

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.testng.annotations.Optional;
-import utils.CONSTANTS.CONSTANTS;
 import utils.CONSTANTS.JSON_SCHEMAS;
 import utils.reqSpecification.REQ_SPEC;
 import utils.resSpecification.RES_SPEC;
@@ -26,12 +25,10 @@ import static utils.populateCsvData.InjectData.populateInvalidIds;
 import static utils.populateCsvData.InjectData.populateValidIds;
 
 @Slf4j
-public class AllCartRequests implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
+public class GetCartRequest implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
     Map<String, Object> mapQueryParams = new HashMap<>();
     public static Faker faker = new Faker();
     public static String byAsc = "asc" , byDesc = "desc";
-    public static final int limitParam = faker.number().numberBetween(1, 5);
-
 
     /**
      * This method tests all carts by sending a GET request to the specified endpoint.
@@ -55,7 +52,7 @@ public class AllCartRequests implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
     }
 
     @Tags({@Tag("Carts"), @Tag("ALL_CARTS")})
-    @DisplayName("Display all carts and products")
+    @DisplayName("Display all carts and products using sort and limit")
     public Response testAllCarts(@Optional String sort, @Optional int limit) {
         mapQueryParams.put("sort", sort);
         mapQueryParams.put("limit", limit);
@@ -71,6 +68,29 @@ public class AllCartRequests implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
 
         return response;
     }
+    public static String expectedErrorMessage = "date format is not correct. it should be in yyyy-mm-dd format";
+    @Tags({@Tag("Carts"), @Tag("ALL_CARTS")})
+    @DisplayName("Display all carts and products using start and end dates format YYYY-MM-DD")
+    public Response testAllCarts(@Optional String startDate, @Optional String endDate) {
+
+        mapQueryParams.put("startdate", startDate);
+        mapQueryParams.put("enddate", endDate);
+        Response response = given()
+                .spec(getRequestSpec())
+                .queryParams(mapQueryParams)
+                .when()
+                .get(allCarts);
+
+        response.then().spec(getResponseSpec());
+        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().body(ALL_CARTS_SCHEMA);
+
+        assertThat(startDate, matchesRegex("\\d{4}-\\d{2}-\\d{2}"));
+        assertThat(endDate, matchesRegex("\\d{4}-\\d{2}-\\d{2}"));
+
+        return response;
+    }
+
 
     /**
      * Retrieves a specific cart with products using the provided ID.

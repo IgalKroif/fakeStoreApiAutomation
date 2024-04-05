@@ -2,12 +2,15 @@ package utils.validation.dataRandomizer;
 
 import utils.CONSTANTS.CONSTANTS;
 
-import static CreateRequest.AllCartRequests.faker;
+import static CreateRequest.GetCartRequest.faker;
 
 public class NumberRandomizer implements CONSTANTS {
 
     public static int generateRandInt() {
         return faker.number().numberBetween(1,7);
+    }
+    public static int generateRandInt(int min, int max) {
+        return faker.number().numberBetween(min,max);
     }
 
     public static double generateRandDouble() {

@@ -1,20 +1,18 @@
 package fakeStoreApi.carts.GET;
 
-import CreateRequest.AllCartRequests;
+import CreateRequest.GetCartRequest;
 import groovy.util.logging.Slf4j;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.CONSTANTS.JSON_SCHEMAS;
-import utils.POJO.cart.Product;
+import utils.pojo.cart.Product;
 import utils.populateCsvData.InjectData;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,7 +27,7 @@ import static utils.populateCsvData.InjectData.populateValidIds;
 
 @Log4j2
 @Slf4j
-public class TestSpecificCart extends AllCartRequests implements JSON_SCHEMAS {
+public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
     public final Logger logger = LoggerFactory.getLogger(TestSpecificCart.class);
 
     /**
@@ -98,7 +96,7 @@ public class TestSpecificCart extends AllCartRequests implements JSON_SCHEMAS {
         logger.info("Tested cartId: " + cartId +  " with status: " + response.getStatusLine());
     }
 /**
- * Tests card using a random Id and validates the user ID and cart date.
+ * Tests card using a random ID and validates the user ID and cart date.
  * @see #validateUserIdAndCartDate(int, Response)
  * @see utils.validation.dataRandomizer.NumberRandomizer#generateRandInt()
  * */
@@ -135,8 +133,8 @@ public class TestSpecificCart extends AllCartRequests implements JSON_SCHEMAS {
 
         // Validate the properties of each product in the cart
         products.forEach(cartProduct -> {
-            validateInt().intGreaterEqualTo(cartProduct.getProductId(), 1, 1, 20);
-            validateInt().intGreaterEqualTo(cartProduct.getQuantity(), 1, 1, Integer.MAX_VALUE);
+            validateInt().intGreaterEqualTo((Integer) cartProduct.getProductId(), 1, 1, 20);
+            validateInt().intGreaterEqualTo((Integer) cartProduct.getQuantity(), 1, 1, Integer.MAX_VALUE);
         });
 
         // Validate the user ID and cart date in the response
@@ -153,14 +151,12 @@ public class TestSpecificCart extends AllCartRequests implements JSON_SCHEMAS {
 
     private static void validateUserIdAndCartDate(int id, Response response) {
         switch (id) {
-            case 1, 2 -> response.then().body("userId", equalTo(1));
+        case 1, 2 ->  response.then().body("userId", equalTo(1));
             case 3 -> response.then().body("userId", equalTo(2));
             case 4, 5 -> response.then().body("userId", equalTo(3));
             case 6 -> response.then().body("userId", equalTo(4));
             case 7 -> response.then().body("userId", equalTo(8));
-            default -> {
-                response.then().log().ifValidationFails(LogDetail.ALL);
-            }
+            default -> response.then().log().ifValidationFails(LogDetail.ALL);
         }
         response.then().body("date", matchesPattern(dateFieldPattern));
 

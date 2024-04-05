@@ -5,6 +5,7 @@ import io.restassured.config.HttpClientConfig;
 import io.restassured.config.LogConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 public class SpecifyRequest {
@@ -25,6 +26,7 @@ public class SpecifyRequest {
                 .log(LogDetail.HEADERS)
                 .log(LogDetail.PARAMS)
                 .log(LogDetail.COOKIES)
+                .setContentType(ContentType.JSON)
                 .setConfig(restAssuredConfig)
                 .build();
     }

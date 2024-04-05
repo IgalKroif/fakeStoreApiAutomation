@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface CONSTANT_VALIDATION {
-    List<Integer> ids = new ArrayList<>();
-    List<Integer> userIds = new ArrayList<>();
-    List<String> cartDates = new ArrayList<>();
-    List<Integer> productIds = new ArrayList<>();
-    List<Integer> productQuantity = new ArrayList<>();
+    List<Object> ids = new ArrayList<>();
+    List<Object> userIds = new ArrayList<>();
+    List<Object> cartDates = new ArrayList<>();
+    List<Object> productIds = new ArrayList<>();
+    List<Object> productQuantity = new ArrayList<>();
 
     /**
      * Clears the given lists.

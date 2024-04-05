@@ -1,6 +1,6 @@
 package fakeStoreApi;
 
-import CreateRequest.AllCartRequests;
+import CreateRequest.GetCartRequest;
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Tag;
@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import utils.CONSTANTS.CONSTANT_VALIDATION;
-import utils.POJO.cart.Items;
-import utils.POJO.cart.Product;
+import utils.pojo.cart.Items;
+import utils.pojo.cart.Product;
 
 import static utils.validation.Fields.StaticFieldValidator.validateInt;
 
@@ -21,7 +21,7 @@ public class SanityTests implements CONSTANT_VALIDATION {
     public void clearList() {
         clearLists(ids, userIds, cartDates, productIds, productQuantity);
     }
-    private final AllCartRequests assertCart = new AllCartRequests();
+    private final GetCartRequest assertCart = new GetCartRequest();
     public final Logger logger = LoggerFactory.getLogger(SanityTests.class);
     @Test
     public void testAllCarts() {

@@ -1,5 +1,6 @@
 package utils.validation.dataRandomizer;
 
+import org.junit.jupiter.api.Test;
 import utils.CONSTANTS.CONSTANTS;
 
 import java.util.Arrays;
@@ -7,11 +8,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import static CreateRequest.AllCartRequests.faker;
+import static CreateRequest.GetCartRequest.faker;
 
 public class StringRandomizer implements CONSTANTS {
 
-    public String generateRandStringName() {
+    public static String generateRandStringName() {
         List<String> characters = Arrays.asList(
                 faker.naruto().character(),
                 faker.doraemon().character(),
@@ -30,7 +31,8 @@ public class StringRandomizer implements CONSTANTS {
                 .findFirst()
                 .orElse("");
     }
-    public String generateRandQuote() {
+
+    public static String generateRandQuote() {
         List<String> quotes = Arrays.asList(
                 faker.babylon5().quote(),
                 faker.community().quote(),
@@ -52,21 +54,27 @@ public class StringRandomizer implements CONSTANTS {
                 .orElse("");
     }
 
-    public String generateRandColors() {
+    public static String generateRandColors() {
         return faker.color().name();
     }
 
-    public char generateRandomChar() {
+    public static char generateRandomChar() {
         Random random = new Random();
         return (char) (random.nextInt(26) + 'a');
     }
+
+    public static String generateRandDate() {
+        return faker.date().birthday("YYYY-MM-dd");
+    }
     //@Test
     public void test() {
-      for (int i = 0; i < 10; i++) {
-         // System.out.println(generateRandStringName());
-          //System.out.println(generateRandQuote());
-          System.out.println(generateRandColors());
-          System.out.println(generateRandomChar());
-      }
+        for (int i = 0; i < 10; i++) {
+            // System.out.println(generateRandStringName());
+            //System.out.println(generateRandQuote());
+            System.out.println(generateRandColors());
+            System.out.println(generateRandomChar());
+            System.out.println(generateRandDate());
+        }
+
     }
 }

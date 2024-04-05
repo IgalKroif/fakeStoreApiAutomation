@@ -1,20 +1,23 @@
 package fakeStoreApi.carts.GET;
 
-import CreateRequest.AllCartRequests;
+import CreateRequest.GetCartRequest;
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import utils.CONSTANTS.CONSTANTS;
-import utils.POJO.cart.Items;
-import utils.POJO.cart.Product;
+import utils.pojo.cart.Items;
+import utils.pojo.cart.Product;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static utils.validation.Fields.StaticFieldValidator.validateInt;
 import static utils.validation.Fields.StaticFieldValidator.validateString;
 
@@ -22,7 +25,7 @@ import static utils.validation.Fields.StaticFieldValidator.validateString;
  * The type Test all carts.
  */
 @Slf4j
-public class TestAllCarts extends AllCartRequests implements CONSTANTS {
+public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     public final Logger logger = LoggerFactory.getLogger(TestAllCarts.class);
 
 
@@ -76,7 +79,7 @@ public class TestAllCarts extends AllCartRequests implements CONSTANTS {
             validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
         }
         // Validate the order of the IDs
-        validateInt().intGreaterEqualTo(ids.get(0), ids.get(ids.size() - 1));
+        validateInt().intGreaterEqualTo((Integer) ids.get(0), (Integer) ids.get(ids.size() - 1));
         // Log the IDs and the size of the ID array
         logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
 
@@ -109,7 +112,7 @@ public class TestAllCarts extends AllCartRequests implements CONSTANTS {
             validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
         }
         // Validate that IDs are in ascending order
-        validateInt().intLessThanEqualTo(ids.get(0), ids.get(ids.size() - 1));
+        validateInt().intLessThanEqualTo((Integer) ids.get(0), (Integer) ids.get(ids.size() - 1));
         // Log the IDs and size of the ID list
         logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
         // Clear the ID list
@@ -181,8 +184,8 @@ public class TestAllCarts extends AllCartRequests implements CONSTANTS {
 
                 // Validate the product ID
                 var productId = product.getProductId();
-                validateInt().intGreaterEqualTo(productId, 1);
-                validateInt().intLessThanEqualTo(productId, 100);
+                validateInt().intGreaterEqualTo((Integer) productId, 1);
+                validateInt().intLessThanEqualTo((Integer) productId, 100);
             }
         }
         // Log the product IDs and the size of the array
@@ -209,13 +212,65 @@ public class TestAllCarts extends AllCartRequests implements CONSTANTS {
                 // Add the quantity to the list of product quantities
                 productQuantity.add(quantity);
                 // Validate that the quantity is greater than or equal to 1
-                validateInt().intGreaterEqualTo(quantity, 1);
+                validateInt().intGreaterEqualTo((Integer) quantity, 1);
                 // Validate that the quantity is less than or equal to 100
-                validateInt().intLessThanEqualTo(quantity, 1000);
+                validateInt().intLessThanEqualTo((Integer) quantity, 1000);
             }
         }
         // Log the added quantities and the size of the array
         logger.info("Cart added quantities: " + productQuantity + "\n" +
                 "Size of array: " + productQuantity.size() + "\n");
+    }
+
+    /**
+     * Asserts the cart by date query parameters.
+     *
+     * @param  startDate  the start date for the cart
+     * @param  endDate    the end date for the cart
+     */
+    @Tags({@Tag("Carts"), @Tag("CartId")})
+    @ParameterizedTest
+    @CsvFileSource(resources = "/CSVS/DIFFERENT_DATES.csv", numLinesToSkip = 1)
+    @DisplayName("Assert Cart by date queryParameters")
+    public void assertSortCartByDateParams(String startDate, String endDate) {
+        if (startDate == null || startDate.isEmpty()) {
+            startDate = "0001-01-01";
+        }
+        if (endDate == null || endDate.isEmpty()) {
+            endDate = "9999-12-31";
+        }
+        // Compare dates as strings and update endDate if startDate is after endDate
+        if (startDate.compareTo(endDate) > 0) {
+            endDate = startDate;
+        }
+        // Call the testAllCarts method with the specified parameters
+        Response response = testAllCarts(startDate, endDate);
+        if (response.statusCode() == 200) {
+            // Parse the response as an array of Items
+            var items = response.as(Items[].class);
+
+            if (Arrays.stream(items).findFirst().isPresent()) {
+                // Iterate over the items and perform assertions and validations
+                for (Items item : items) {
+                    ids.add(item.getId());
+                    assertThat(item.getId()).isGreaterThan(0);
+                    validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
+                }
+                // Validate the order of the IDs
+                validateInt().intLessThanEqualTo((Integer) ids.get(0), (Integer) ids.get(ids.size() - 1));
+                // Log the IDs and the size of the ID array
+                logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+            } else {
+                logger.info("No items found in the response due to wrong date range : " + startDate + " - " + endDate);
+            }
+        }
+        if (response.statusCode() == 400) {
+
+            logger.info("Bad Request: " + expectedErrorMessage);
+            response.then().body("status", equalTo("error"));
+            response.then().body("message", equalTo(expectedErrorMessage));
+        }
+        // Clear the list of IDs
+        clearList();
     }
 }

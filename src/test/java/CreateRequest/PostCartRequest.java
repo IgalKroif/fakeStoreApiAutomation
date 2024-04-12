@@ -1,6 +1,7 @@
 package CreateRequest;
 
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -21,9 +22,11 @@ import static utils.resSpecification.SpecifyResponse.getResponseSpec;
 
 public class PostCartRequest {
 
-    private CreateCart requestBody(Object userId, Object date, @Optional Object productId, @Optional Object quantity) {
+    public static CreateCart requestBody(Object userId, Object date, @Optional Object productId, @Optional Object quantity) {
         CreateCart requestBody = new CreateCart();
         List<Product> products = new ArrayList<>();
+        products.add(new Product(productId, quantity));
+        products.add(new Product(productId, quantity));
         products.add(new Product(productId, quantity));
         requestBody.setUserId(userId);
         requestBody.setDate(date);
@@ -33,16 +36,16 @@ public class PostCartRequest {
     }
 
     /**
-     * Display all carts and products
+     * Create new Carts with all body fields
      *
-     * @param  userId    Object representing the user ID
-     * @param  date      Object representing the date
-     * @param  productId (Optional) Object representing the product ID
-     * @param  quantity  (Optional) Object representing the quantity
-     * @return           Response object containing the result of adding a new cart with all body fields
+     * @param  userId     description of parameter
+     * @param  date       description of parameter
+     * @param  productId  description of parameter
+     * @param  quantity   description of parameter
+     * @return  response request method.
      */
     @Tags({@Tag("Carts"), @Tag("ALL_CARTS")})
-    @DisplayName("Display all carts and products")
+    @DisplayName("Create new Carts with all body fields")
     public Response addNewCartWithAllBodyFields(Object userId, Object date, @Optional Object productId, @Optional Object quantity) {
         Response response = given()
                 .spec(getRequestSpec())

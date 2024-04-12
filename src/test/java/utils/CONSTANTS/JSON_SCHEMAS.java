@@ -11,4 +11,6 @@ public interface JSON_SCHEMAS {
             "SCHEMAS/errorSchemaSingleCart.json");
     JsonSchemaValidator CREATE_CART_SCHEMA = JsonSchemaValidator.matchesJsonSchemaInClasspath(
             "SCHEMAS/createCartSchema.json");
+    JsonSchemaValidator UPDATE_CART_SCHEMA = JsonSchemaValidator.matchesJsonSchemaInClasspath(
+            "SCHEMAS/updateCartSchema.json");
 }

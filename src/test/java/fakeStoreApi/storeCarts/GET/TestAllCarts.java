@@ -1,4 +1,4 @@
-package fakeStoreApi.carts.GET;
+package fakeStoreApi.storeCarts.GET;
 
 import CreateRequest.GetCartRequest;
 import groovy.util.logging.Slf4j;
@@ -28,7 +28,6 @@ import static utils.validation.Fields.StaticFieldValidator.validateString;
 public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     public final Logger logger = LoggerFactory.getLogger(TestAllCarts.class);
 
-
     /**
      * Clears the lists of ids, userIds, cartDates, productIds, and productQuantity.
      */
@@ -52,7 +51,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
             assertThat(item.getId()).isGreaterThan(0);
             validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
         }
-        logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+        logResponse();
     }
 
     /**
@@ -81,7 +80,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
         // Validate the order of the IDs
         validateInt().intGreaterEqualTo((Integer) ids.get(0), (Integer) ids.get(ids.size() - 1));
         // Log the IDs and the size of the ID array
-        logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+        logResponse();
 
         // Clear the list of IDs
         clearList();
@@ -114,7 +113,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
         // Validate that IDs are in ascending order
         validateInt().intLessThanEqualTo((Integer) ids.get(0), (Integer) ids.get(ids.size() - 1));
         // Log the IDs and size of the ID list
-        logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+        logResponse();
         // Clear the ID list
         clearList();
     }
@@ -259,7 +258,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
                 // Validate the order of the IDs
                 validateInt().intLessThanEqualTo((Integer) ids.get(0), (Integer) ids.get(ids.size() - 1));
                 // Log the IDs and the size of the ID array
-                logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+                logResponse();
             } else {
                 logger.info("No items found in the response due to wrong date range : " + startDate + " - " + endDate);
             }
@@ -272,5 +271,8 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
         }
         // Clear the list of IDs
         clearList();
+    }
+    private void logResponse() {
+        logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
     }
 }

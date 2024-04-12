@@ -1,4 +1,4 @@
-package fakeStoreApi.carts.GET;
+package fakeStoreApi.storeCarts.GET;
 
 import CreateRequest.GetCartRequest;
 import groovy.util.logging.Slf4j;

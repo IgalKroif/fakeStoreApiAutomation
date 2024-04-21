@@ -1,6 +1,6 @@
 package fakeStoreApi.storeCarts.POST;
 
-import CreateRequest.PostCartRequest;
+import CreateRequest.cart.PostCartRequest;
 import org.junit.jupiter.api.RepeatedTest;
 import utils.CONSTANTS.JSON_SCHEMAS;
 

@@ -1,4 +1,4 @@
-package CreateRequest;
+package CreateRequest.cart;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +9,7 @@ import utils.CONSTANTS.JSON_SCHEMAS;
 
 import java.util.concurrent.TimeUnit;
 
-import static CreateRequest.PostCartRequest.requestBody;
+import static CreateRequest.cart.PostCartRequest.requestBody;
 import static Routes.RouteCartEndPoint.cartById;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.lessThan;

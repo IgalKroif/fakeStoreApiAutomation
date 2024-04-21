@@ -1,6 +1,6 @@
 package fakeStoreApi;
 
-import CreateRequest.GetCartRequest;
+import CreateRequest.cart.GetCartRequest;
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Tag;
@@ -23,18 +23,6 @@ public class SanityTests implements CONSTANT_VALIDATION {
     }
     private final GetCartRequest assertCart = new GetCartRequest();
     public final Logger logger = LoggerFactory.getLogger(SanityTests.class);
-    @Test
-    public void testAllCarts() {
-        Response response = assertCart.testAllCarts();
-        var items = response.as(Items[].class);
-        extractAllCarts(items);
-        logger.info(
-                "ids: " + ids + "\n" +
-                "UserIds: " + userIds + "\n" +
-                "Added to cart dates: " + cartDates + "\n" +
-                "Product Ids: " + productIds + "\n" +
-                "Product Quantity: " + productQuantity);
-    }
 
     private static void extractAllCarts(Items[] items) {
         for (Items item : items) {
@@ -47,5 +35,13 @@ public class SanityTests implements CONSTANT_VALIDATION {
                 productQuantity.add(product.getQuantity());
             }
         }
+    }
+
+    @Test
+    public void testAllCarts() {
+        Response response = assertCart.testAllCarts();
+        var items = response.as(Items[].class);
+        extractAllCarts(items);
+        logger.info("ids: {}\nUserIds: {}\nAdded to cart dates: {}\nProduct Ids: {}\nProduct Quantity: {}", ids, userIds, cartDates, productIds, productQuantity);
     }
 }

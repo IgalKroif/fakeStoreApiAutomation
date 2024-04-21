@@ -1,6 +1,6 @@
 package fakeStoreApi.storeCarts.GET;
 
-import CreateRequest.GetCartRequest;
+import CreateRequest.cart.GetCartRequest;
 import groovy.util.logging.Slf4j;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
@@ -50,7 +50,11 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
         // asserts that the body id field equals the id of the csv param sent in the request CSV.
         response.then().body("id", is(equalTo(cartId)));
 
-        logger.info("Tested cartId: " + cartId +  " with status: " + response.getStatusLine());
+        logCart(logger, "Tested cartId: " + cartId + " with status: " + response.getStatusLine());
+    }
+
+    private static void logCart(Logger logger, String cartId) {
+        logger.info(cartId);
     }
 
     /**
@@ -82,7 +86,7 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
             case 500 -> assertThat(responseBody, containsStringIgnoringCase("Internal Server Error"));
             default -> response.then().statusCode(404);
         }
-        logger.info("Tested cartId: " + cartId +  " with status: " + response.getStatusLine());
+        logCart(logger, "Tested cartId: " + cartId + " with status: " + response.getStatusLine());
     }
 
     @RepeatedTest(10)
@@ -93,7 +97,7 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
         response.then().body("id", equalTo(cartId));
         validateUserIdAndCartDate(cartId, response);
 
-        logger.info("Tested cartId: " + cartId +  " with status: " + response.getStatusLine());
+        logCart(logger, "Tested cartId: " + cartId + " with status: " + response.getStatusLine());
     }
 /**
  * Tests card using a random ID and validates the user ID and cart date.
@@ -107,7 +111,7 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
         Response response = testSpecificCart(cartId);
         validateUserIdAndCartDate(cartId, response);
 
-        logger.info("Tested cartId: " + cartId +  " with status: " + response.getStatusLine());
+        logCart(logger, "Tested cartId: " + cartId + " with status: " + response.getStatusLine());
     }
 
     /**
@@ -145,8 +149,8 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
         validateInt().intGreaterEqualTo(cartVersion, -1, -1, 1);
 
         // Log the tested cart ID and the status of the response
-        logger.info("Tested cartId: " + cartId +  " with status: " + response.getStatusLine() + "\n" +
-                " asserted products in cart " + " "+ products.stream().toList() + "\n");
+        logCart(logger, "Tested cartId: " + cartId + " with status: " + response.getStatusLine() + "\n" +
+                " asserted products in cart " + " " + products.stream().toList() + "\n");
     }
 
     private static void validateUserIdAndCartDate(int id, Response response) {
@@ -161,7 +165,7 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
         response.then().body("date", matchesPattern(dateFieldPattern));
 
      var logger = LoggerFactory.getLogger(TestSpecificCart.class);
-     logger.info("response userId tested:" + response.getBody().jsonPath().get("userId") + "\n" +
-               "response date tested regex of:" + response.getBody().jsonPath().get("date") + " " + "\n");
+        logCart(logger, "response userId tested:" + response.getBody().jsonPath().get("userId") + "\n" +
+                "response date tested regex of:" + response.getBody().jsonPath().get("date") + " " + "\n");
     }
 }

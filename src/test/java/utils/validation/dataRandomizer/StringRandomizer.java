@@ -1,6 +1,5 @@
 package utils.validation.dataRandomizer;
 
-import org.junit.jupiter.api.Test;
 import utils.CONSTANTS.CONSTANTS;
 
 import java.util.Arrays;
@@ -8,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import static CreateRequest.GetCartRequest.faker;
+import static CreateRequest.cart.GetCartRequest.faker;
 
 public class StringRandomizer implements CONSTANTS {
 

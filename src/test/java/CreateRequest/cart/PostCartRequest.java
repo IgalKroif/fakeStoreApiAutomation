@@ -1,7 +1,6 @@
-package CreateRequest;
+package CreateRequest.cart;
 
 import io.restassured.response.Response;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -16,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 import static Routes.RouteCartEndPoint.allCarts;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.lessThan;
-import static utils.CONSTANTS.JSON_SCHEMAS.ALL_CARTS_SCHEMA;
 import static utils.reqSpecification.SpecifyRequest.getRequestSpec;
 import static utils.resSpecification.SpecifyResponse.getResponseSpec;
 

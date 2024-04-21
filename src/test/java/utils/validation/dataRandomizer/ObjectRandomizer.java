@@ -1,13 +1,9 @@
 package utils.validation.dataRandomizer;
 
 import net.datafaker.Faker;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 
 import java.io.Serializable;
 import java.util.*;
-
-import static CreateRequest.GetCartRequest.faker;
 
 public class ObjectRandomizer {
 

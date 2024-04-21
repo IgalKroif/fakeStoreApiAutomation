@@ -1,4 +1,4 @@
-package CreateRequest;
+package CreateRequest.cart;
 
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;

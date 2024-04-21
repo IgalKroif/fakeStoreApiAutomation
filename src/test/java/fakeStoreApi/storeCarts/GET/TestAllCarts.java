@@ -1,6 +1,6 @@
 package fakeStoreApi.storeCarts.GET;
 
-import CreateRequest.GetCartRequest;
+import CreateRequest.cart.GetCartRequest;
 import groovy.util.logging.Slf4j;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
@@ -273,6 +273,6 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
         clearList();
     }
     private void logResponse() {
-        logger.info("ids: " + ids + "\n" + "id array size:" + ids.size() + "\n");
+        logger.info("ids: {}\nid array size:{}\n", ids, ids.size());
     }
 }

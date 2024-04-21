@@ -1,6 +1,6 @@
 package fakeStoreApi.storeCarts.UPDATE;
 
-import CreateRequest.UpdateCartRequest;
+import CreateRequest.cart.UpdateCartRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;

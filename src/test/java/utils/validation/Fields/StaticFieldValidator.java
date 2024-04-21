@@ -3,9 +3,13 @@ package utils.validation.Fields;
 import io.restassured.response.Response;
 import org.hamcrest.Matcher;
 import utils.pojo.cart.Items;
+import utils.pojo.product.Products;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static utils.validation.dataRandomizer.NumberRandomizer.generateRandInt;
@@ -94,5 +98,26 @@ public class StaticFieldValidator {
                 assertNull(product.getQuantity());
             }
         });
+    }
+
+
+    /**
+     * A description of the assertion of streamed product field.
+     *
+     * @param  product              the product to assert
+     * @param  expectedFieldValues  the list of expected field values
+     * @param  fieldGetter          the field getter to retrieve the field value
+     * @return                     true if the assertion passes, false otherwise
+     */
+    public static void assertStreamedProductField(Products product, List<?> expectedFieldValues, FieldGetter<?> fieldGetter) {
+        assertThat(expectedFieldValues.stream().anyMatch(expectedValue -> expectedValue.equals(fieldGetter.getFieldValue(product))), equalTo(true));
+    }
+
+    /**
+     * uses the field getter to retrieve the field value of the product and asserts it against the expected field value.
+     * @param <T>
+     */
+    public interface FieldGetter<T> {
+        T getFieldValue(Products product);
     }
 }

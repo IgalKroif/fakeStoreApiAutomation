@@ -2,7 +2,7 @@ package utils.validation.dataRandomizer;
 
 import utils.CONSTANTS.CONSTANTS;
 
-import static CreateRequest.GetCartRequest.faker;
+import static CreateRequest.cart.GetCartRequest.faker;
 
 public class NumberRandomizer implements CONSTANTS {
 

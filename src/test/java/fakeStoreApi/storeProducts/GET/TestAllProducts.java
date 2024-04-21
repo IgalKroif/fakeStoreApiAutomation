@@ -13,13 +13,15 @@ import utils.pojo.product.Rating;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static org.apache.commons.io.function.IOConsumer.forEach;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.validation.Fields.StaticFieldValidator.*;
 
 public class TestAllProducts extends GetProductRequest implements CONSTANTS {
 
-    public final Logger logger = LoggerFactory.getLogger(TestAllCarts.class);
+    public final Logger logger = LoggerFactory.getLogger(TestAllProducts.class);
 
     /**
      * Clears the lists of productIds, titles, prices, descriptions, categories, and images.
@@ -33,10 +35,10 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @DisplayName("Testing all product IDs")
     @Tags({@Tag("Products"), @Tag("GET")})
     public void testAllProductIds() {
-        var response = super.requestAllProducts();
+        var response = super.getProducts();
 
         var products = response.as(Products[].class);
-        //Arrays.stream(products).forEach(System.out::println);
+      //  Arrays.stream(products).forEach(System.out::println);
         Arrays.stream(products).forEach(product -> {
             productIds.add(product.getId());
         });
@@ -50,7 +52,7 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @DisplayName("Testing all product titles")
     @Tags({@Tag("Products"), @Tag("GET")})
     public void testAllProductTitles() {
-        var response = super.requestAllProducts();
+        var response = super.getProducts();
 
         var products = response.as(Products[].class);
         Arrays.stream(products).forEach(product -> {
@@ -64,12 +66,22 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @DisplayName("Testing all product prices")
     @Tags({@Tag("Products"), @Tag("GET")})
     public void testAllProductPrices() {
-        var response = super.requestAllProducts();
+        var response = super.getProducts();
 
         var products = response.as(Products[].class);
         Arrays.stream(products).forEach(product -> {
             prices.add(product.getPrice());
             assertStreamedProductField(product, prices, Products::getPrice);
+
+            if (product.getPrice() instanceof Integer) {
+                validateInt().intGreaterEqualTo((Integer) product.getPrice(), 0);
+                validateInt().intLessThanEqualTo((Integer) product.getPrice(), 1000);
+            } else if (product.getPrice() instanceof Double) {
+                validateInt().doubleGreaterEqualTo((Double) product.getPrice(), 0.0);
+                validateInt().doubleLessThanEqualTo((Double) product.getPrice(), 1000.0);
+            } else {
+                throw new AssertionError("Unsupported rating type: " + product.getPrice().getClass().getName());
+            }
         });
         logProductIds(prices, "Prices");
     }
@@ -78,13 +90,14 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @DisplayName("Testing all product descriptions")
     @Tags({@Tag("Products"), @Tag("GET")})
     public void testAllProductDescriptions() {
-        var response = super.requestAllProducts();
+        var response = super.getProducts();
 
         var products = response.as(Products[].class);
         Arrays.stream(products).forEach(product -> {
             descriptions.add(product.getDescription());
             assertStreamedProductField(product, descriptions, Products::getDescription);
         });
+        descriptions.stream().distinct().forEach(System.out::println);
         logProductIds(descriptions, "Descriptions");
     }
 
@@ -92,7 +105,7 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @DisplayName("Testing all product categories")
     @Tags({@Tag("Products"), @Tag("GET")})
     public void testAllProductCategories() {
-        var response = super.requestAllProducts();
+        var response = super.getProducts();
 
         var products = response.as(Products[].class);
         Arrays.stream(products).forEach(product -> {
@@ -106,14 +119,13 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @DisplayName("Testing all product images")
     @Tags({@Tag("Products"), @Tag("GET")})
     public void testAllProductImages() {
-        var response = super.requestAllProducts();
+        var response = super.getProducts();
 
         var products = response.as(Products[].class);
         Arrays.stream(products).forEach(product -> {
             images.add(product.getImage());
             assertStreamedProductField(product, images, Products::getImage);
             assertTrue(images.stream().allMatch(image -> ((String) image).endsWith(".jpg")));
-
         });
         logProductIds(images, "Images");
     }
@@ -122,7 +134,7 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @DisplayName("Testing all product ratings")
     @Tags({@Tag("Products"), @Tag("GET")})
     public void testAllProductRatings() {
-        var response = super.requestAllProducts();
+        var response = super.getProducts();
 
         var products = response.as(Products[].class);
         Arrays.stream(products).forEach(product -> {

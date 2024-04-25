@@ -22,7 +22,7 @@ public class NumberRandomizer implements CONSTANTS {
     }
 
     public static float generateRandFloat() {
-        return (float) faker.number().randomDouble(2, 1, 10);
+        return (float) faker.number().randomDouble(2, 1, 1000);
     }
 
 }

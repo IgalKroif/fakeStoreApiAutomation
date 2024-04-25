@@ -45,4 +45,17 @@ public class GetProductRequest implements JSON_SCHEMAS {
         return response;
     }
     //TODO : add limit and sort to product GETS
+    @Tags({@Tag("Carts"), @Tag("ALL_CARTS")})
+    @DisplayName("Display all carts and products using sort and limit")
+    public Response getProducts(Object sort, Object limit) {
+        Response response = given()
+                .spec(getRequestSpec())
+                .queryParams("sort", sort, "limit", limit)
+                .when()
+                .get(allProducts);
+        response.then().spec(getResponseSpec());
+        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().statusCode(200);
+        return response;
+    }
 }

@@ -1,7 +1,6 @@
 package fakeStoreApi.storeProducts.GET;
 
 import CreateRequest.product.GetProductRequest;
-import fakeStoreApi.storeCarts.GET.TestAllCarts;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +14,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.apache.commons.io.function.IOConsumer.forEach;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.validation.Fields.StaticFieldValidator.*;
+import static utils.validation.dataRandomizer.NumberRandomizer.generateRandInt;
 
 public class TestAllProducts extends GetProductRequest implements CONSTANTS {
 
@@ -38,7 +40,6 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
         var response = super.getProducts();
 
         var products = response.as(Products[].class);
-      //  Arrays.stream(products).forEach(System.out::println);
         Arrays.stream(products).forEach(product -> {
             productIds.add(product.getId());
         });
@@ -159,6 +160,45 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
         // Assert the number of ratings
         validateInt().intLessThanEqualTo(ratings.size(), 20);
         logProductIds(Collections.singletonList(ratings), "Ratings");
+    }
+
+    @Test
+    @DisplayName("Test Sorted Products by DESCENDING order")
+    @Tags({@Tag("Products"), @Tag("GET")})
+    public void testSortedProductsByDescendingOrder() {
+        var response = super.getProducts("desc", null);
+
+        var products = response.as(Products[].class);
+        assertThat(products[0].getId(), is(equalTo(20)));
+        assertThat(products[products.length - 1].getId(), is(equalTo(1)));
+        ids.add(Arrays.stream(products).map(Products::getId).collect(Collectors.toList()));
+        logProductIds((List<Object>) ids.get(0), "Ids");
+    }
+
+    @Test
+    @DisplayName("Test Sorted Products by ASCENDING order")
+    @Tags({@Tag("Products"), @Tag("GET")})
+    public void testSortedProductsByAscendingOrder() {
+        var response = super.getProducts("asc", null);
+
+        var products = response.as(Products[].class);
+        assertThat(products[0].getId(), is(equalTo(1)));
+        assertThat(products[products.length - 1].getId(), is(equalTo(20)));
+        ids.add(Arrays.stream(products).map(Products::getId).collect(Collectors.toList()));
+        logProductIds((List<Object>) ids.get(0), "Ids");
+    }
+
+    @RepeatedTest(20)
+    @DisplayName("Test Sorted Products with limit")
+    @Tags({@Tag("Products"), @Tag("GET")})
+    public void testSortedProductsWithLimit() {
+        var randLimit = generateRandInt(1, 20);
+        var response = super.getProducts("asc", randLimit);
+
+        var products = response.as(Products[].class);
+        assertThat(products.length, is(equalTo(randLimit)));
+        ids.add(Arrays.stream(products).map(Products::getId).collect(Collectors.toList()));
+        logProductIds((List<Object>) ids.get(0), "Ids");
     }
 
     public void logProductIds(List<Object> productList) {

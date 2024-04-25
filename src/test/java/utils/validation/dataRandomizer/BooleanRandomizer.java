@@ -6,7 +6,7 @@ import static CreateRequest.cart.GetCartRequest.faker;
 
 public class BooleanRandomizer implements CONSTANTS {
 
-    public boolean generateRandomBool() {
+    public static boolean generateRandomBool() {
         return faker.bool().bool();
     }
 }

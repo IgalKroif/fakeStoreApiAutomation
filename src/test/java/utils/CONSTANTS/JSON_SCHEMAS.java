@@ -23,4 +23,7 @@ public interface JSON_SCHEMAS {
 
     JsonSchemaValidator SINGLE_PRODUCT_SCHEMA = JsonSchemaValidator.matchesJsonSchemaInClasspath(
             "SCHEMAS/singleProductSchema.json");
+
+    JsonSchemaValidator POST_SINGLE_PRODUCT_SCHEMA = JsonSchemaValidator.matchesJsonSchemaInClasspath(
+            "SCHEMAS/createProductSchema.json");
 }

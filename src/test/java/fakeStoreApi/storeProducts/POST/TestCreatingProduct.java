@@ -14,10 +14,10 @@ import static utils.validation.dataRandomizer.StringRandomizer.generateRandStrin
 
 @DisplayName("Create Product Test Class")
 public class TestCreatingProduct extends PostProductRequest {
-    Integer randInt = generateRandInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
-    Float randFloat = generateRandFloat();
-    String randString = generateRandStringName();
-    Boolean randBoolean = generateRandomBool();
+    public Integer randInt = generateRandInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    public Float randFloat = generateRandFloat();
+    public String randString = generateRandStringName();
+    public Boolean randBoolean = generateRandomBool();
 
     public Products createProduct() {
         Products product = new Products();
@@ -42,18 +42,18 @@ public class TestCreatingProduct extends PostProductRequest {
         product.setRating(new Rating(rating, count));
         return product;
     }
-
-    @RepeatedTest(10)
+    @Test
     @Tags(@Tag("Sanity"))
     @DisplayName("Sanity Test: Create Product")
-    public void testCreateProductSanity() {
-        var response = super.createAProduct(createProduct());
+    protected void testCreateProductSanity() {
+        Products product = createProduct();
+        var response = super.createAProduct(product);
         // Add assertions based on the response if needed
     }
     @RepeatedTest(24)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with all fields")
-    public void testCreateProductWithAllFields() {
+    protected void testCreateProductWithAllFields() {
         var response = super.createAProduct(createProduct(
                 generateRandInt(),
                 generateRandFloat(),
@@ -69,7 +69,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various IDs")
-    public void testCreateProductWithVariousIds() {
+    protected void testCreateProductWithVariousIds() {
         Products product = createProduct();
         product.setId(randInt);
         var response = super.createAProduct(product);
@@ -82,7 +82,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various int titles")
-    public void testCreateProductWithVariousIntTitles() {
+    protected void testCreateProductWithVariousIntTitles() {
         Products product = createProduct();
         product.setTitle(randInt);
         var response = super.createAProduct(product);
@@ -92,7 +92,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various titles")
-    public void testCreateProductWithVariousStringTitles() {
+    protected void testCreateProductWithVariousStringTitles() {
         Products product = createProduct();
         product.setTitle(randString);
         var response = super.createAProduct(product);
@@ -102,7 +102,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various float titles")
-    public void testCreateProductWithVariousFloatTitles() {
+    protected void testCreateProductWithVariousFloatTitles() {
         Products product = createProduct();
         product.setTitle(randFloat);
         var response = super.createAProduct(product);
@@ -112,7 +112,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various boolean titles")
-    public void testCreateProductWithVariousBooleanTitles() {
+    protected void testCreateProductWithVariousBooleanTitles() {
         Products product = createProduct();
         product.setTitle(randBoolean);
         var response = super.createAProduct(product);
@@ -122,7 +122,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various prices")
-    public void testCreateProductWithVariousPrices() {
+    protected void testCreateProductWithVariousPrices() {
         Products product = createProduct();
         product.setPrice(randFloat);
         var response = super.createAProduct(product);
@@ -132,7 +132,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various descriptions")
-    public void testCreateProductWithVariousDescriptions() {
+    protected void testCreateProductWithVariousDescriptions() {
         Products product = createProduct();
         product.setDescription(randString);
         var response = super.createAProduct(product);
@@ -142,7 +142,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various int descriptions")
-    public void testCreateProductWithVariousIntDescriptions() {
+    protected void testCreateProductWithVariousIntDescriptions() {
         Products product = createProduct();
         product.setDescription(randInt);
         var response = super.createAProduct(product);
@@ -152,7 +152,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various float descriptions")
-    public void testCreateProductWithVariousFloatDescriptions() {
+    protected void testCreateProductWithVariousFloatDescriptions() {
         Products product = createProduct();
         product.setDescription(randFloat);
         var response = super.createAProduct(product);
@@ -162,7 +162,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various boolean descriptions")
-    public void testCreateProductWithVariousBooleanDescriptions() {
+    protected void testCreateProductWithVariousBooleanDescriptions() {
         Products product = createProduct();
         product.setDescription(randBoolean);
         var response = super.createAProduct(product);
@@ -172,7 +172,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various categories")
-    public void testCreateProductWithVariousCategories() {
+    protected void testCreateProductWithVariousCategories() {
         Products product = createProduct();
         product.setCategory(randString);
         var response = super.createAProduct(product);
@@ -182,7 +182,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various int categories")
-    public void testCreateProductWithVariousIntCategories() {
+    protected void testCreateProductWithVariousIntCategories() {
         Products product = createProduct();
         product.setCategory(randInt);
         var response = super.createAProduct(product);
@@ -192,7 +192,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various float categories")
-    public void testCreateProductWithVariousFloatCategories() {
+    protected void testCreateProductWithVariousFloatCategories() {
         Products product = createProduct();
         product.setCategory(randFloat);
         var response = super.createAProduct(product);
@@ -202,7 +202,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various boolean categories")
-    public void testCreateProductWithVariousBooleanCategories() {
+    protected void testCreateProductWithVariousBooleanCategories() {
         Products product = createProduct();
         product.setCategory(randBoolean);
         var response = super.createAProduct(product);
@@ -212,7 +212,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various images")
-    public void testCreateProductWithVariousImages() {
+    protected void testCreateProductWithVariousImages() {
         Products product = createProduct();
         product.setImage(randString);
         var response = super.createAProduct(product);
@@ -222,7 +222,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various int images")
-    public void testCreateProductWithVariousIntImages() {
+    protected void testCreateProductWithVariousIntImages() {
         Products product = createProduct();
         product.setImage(randInt);
         var response = super.createAProduct(product);
@@ -232,7 +232,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various float images")
-    public void testCreateProductWithVariousFloatImages() {
+    protected void testCreateProductWithVariousFloatImages() {
         Products product = createProduct();
         product.setImage(randFloat);
         var response = super.createAProduct(product);
@@ -242,7 +242,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @RepeatedTest(10)
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with various boolean images")
-    public void testCreateProductWithVariousBooleanImages() {
+    protected void testCreateProductWithVariousBooleanImages() {
         Products product = createProduct();
         product.setImage(randBoolean);
         var response = super.createAProduct(product);
@@ -252,7 +252,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @Test
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with null prices")
-    public void testCreateProductWithNullPrices() {
+    protected void testCreateProductWithNullPrices() {
         Products product = createProduct();
         product.setPrice(null);
         var response = super.createAProduct(product);
@@ -262,7 +262,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @Test
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with empty prices")
-    public void testCreateProductWithEmptyPrices() {
+    protected void testCreateProductWithEmptyPrices() {
         Products product = createProduct();
         product.setPrice("");
         var response = super.createAProduct(product);
@@ -272,7 +272,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @Test
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with null title")
-    public void testCreateProductWithNullTitle() {
+    protected void testCreateProductWithNullTitle() {
         Products product = createProduct();
         product.setTitle(null);
         var response = super.createAProduct(product);
@@ -282,7 +282,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @Test
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with empty title")
-    public void testCreateProductWithEmptyTitle() {
+    protected void testCreateProductWithEmptyTitle() {
         Products product = createProduct();
         product.setTitle("");
         var response = super.createAProduct(product);
@@ -292,7 +292,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @Test
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with null description")
-    public void testCreateProductWithNullDescription() {
+    protected void testCreateProductWithNullDescription() {
         Products product = createProduct();
         product.setDescription(null);
         var response = super.createAProduct(product);
@@ -302,7 +302,7 @@ public class TestCreatingProduct extends PostProductRequest {
     @Test
     @Tags({@Tag("POST"), @Tag("PRODUCTS")})
     @DisplayName("Create Product with empty description")
-    public void testCreateProductWithEmptyDescription() {
+    protected void testCreateProductWithEmptyDescription() {
         Products product = createProduct();
         product.setDescription("");
         var response = super.createAProduct(product);

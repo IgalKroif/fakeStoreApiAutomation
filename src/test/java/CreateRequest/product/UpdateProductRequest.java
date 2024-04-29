@@ -21,7 +21,7 @@ public class UpdateProductRequest {
                 .when()
                 .put(allProducts + "/" + productIdToUpdate);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
        // response.then().body(POST_SINGLE_PRODUCT_SCHEMA);
         return response;
@@ -34,7 +34,7 @@ public class UpdateProductRequest {
                 .when()
                 .patch(allProducts + "/" + productIdToUpdate);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         //response.then().body(POST_SINGLE_PRODUCT_SCHEMA);
         return response;

@@ -104,6 +104,7 @@ public class TestUpdateExistingCart extends UpdateCartRequest {
         this.productId = generateRandInt(1, Integer.MAX_VALUE);
         this.quantity = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.updateExistingCartUsingPut(userId, date, productId, quantity);
+        response.then().body(UPDATE_CART_SCHEMA);
         assertNullInBody(response, equalTo(userId), equalTo(date), equalTo(productId), equalTo(quantity));
     }
 
@@ -125,6 +126,7 @@ public class TestUpdateExistingCart extends UpdateCartRequest {
         this.productId = generateRandInt(1, Integer.MAX_VALUE);
         this.quantity = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.updateExistingCartUsingPut(id, userId, date, productId, quantity);
+        response.then().body(UPDATE_CART_SCHEMA);
         assertNullInBody(response, equalTo(id), equalTo(userId), equalTo(date), equalTo(productId), equalTo(quantity));
     }
 
@@ -138,6 +140,7 @@ public class TestUpdateExistingCart extends UpdateCartRequest {
         this.productId = generateRandInt(1, Integer.MAX_VALUE);
         this.quantity = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.updateExistingCartUsingPut(id, userId, date, productId, quantity);
+        response.then().body(UPDATE_CART_SCHEMA);
         assertNullInBody(response, equalTo(id), equalTo(userId), equalTo(date), equalTo(productId), equalTo(quantity));
     }
 
@@ -147,6 +150,7 @@ public class TestUpdateExistingCart extends UpdateCartRequest {
     public void patchUserIDFieldTest() {
         this.userId = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.updateExistingCartUsingPatch(userId, date, productId, quantity);
+
         assertNullInBody(response, equalTo(userId), nullValue(), nullValue(), nullValue());
     }
 
@@ -222,6 +226,7 @@ public class TestUpdateExistingCart extends UpdateCartRequest {
         this.productId = generateRandInt(1, Integer.MAX_VALUE);
         this.quantity = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.updateExistingCartUsingPatch(userId, date, productId, quantity);
+        response.then().body(UPDATE_CART_SCHEMA);
         assertNullInBody(response, equalTo(userId), equalTo(date), equalTo(productId), equalTo(quantity));
     }
 
@@ -243,6 +248,7 @@ public class TestUpdateExistingCart extends UpdateCartRequest {
         this.productId = generateRandInt(1, Integer.MAX_VALUE);
         this.quantity = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.updateExistingCartUsingPatch(id, userId, date, productId, quantity);
+        response.then().body(UPDATE_CART_SCHEMA);
         assertNullInBody(response, equalTo(id), equalTo(userId), equalTo(date), equalTo(productId), equalTo(quantity));
     }
 
@@ -256,6 +262,7 @@ public class TestUpdateExistingCart extends UpdateCartRequest {
         this.productId = generateRandInt(1, Integer.MAX_VALUE);
         this.quantity = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.updateExistingCartUsingPatch(id, userId, date, productId, quantity);
+        response.then().body(UPDATE_CART_SCHEMA);
         assertNullInBody(response, equalTo(id), equalTo(userId), equalTo(date), equalTo(productId), equalTo(quantity));
     }
 }

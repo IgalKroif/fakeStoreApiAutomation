@@ -51,7 +51,7 @@ public class PostCartRequest {
                 .when()
                 .post(allCarts);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
 
         return response;

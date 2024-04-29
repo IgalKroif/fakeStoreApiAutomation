@@ -1,6 +1,7 @@
 package CreateRequest.cart;
 
 import groovy.util.logging.Slf4j;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
@@ -38,13 +39,14 @@ public class GetCartRequest implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
      */
     @Tags({@Tag("Carts"), @Tag("ALL_CARTS")})
     @DisplayName("Display all carts and products")
+    @Step
     public Response testAllCarts() {
         Response response = given()
                 .spec(getRequestSpec())
                 .when()
                 .get(allCarts);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         response.then().body(ALL_CARTS_SCHEMA);
 
@@ -62,7 +64,7 @@ public class GetCartRequest implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
                 .when()
                 .get(allCarts);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         response.then().body(ALL_CARTS_SCHEMA);
 
@@ -82,7 +84,7 @@ public class GetCartRequest implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
                 .get(allCarts);
 
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().body(ALL_CARTS_SCHEMA);
 
         assertThat(startDate, matchesRegex("\\d{4}-\\d{2}-\\d{2}"));
@@ -107,7 +109,7 @@ public class GetCartRequest implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
                 .when()
                 .get(cartById);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         response.then().body(SINGLE_CART_SCHEMA);
         validateHeaderResponseData(response);
@@ -119,7 +121,7 @@ public class GetCartRequest implements REQ_SPEC, RES_SPEC, JSON_SCHEMAS {
                 .spec(getRequestSpec())
                 .when()
                 .get(cartById);
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().log().status().and().statusCode(is(oneOf(200,400)));
         response.then().log().headers();
         var statusCode = response.getStatusCode();

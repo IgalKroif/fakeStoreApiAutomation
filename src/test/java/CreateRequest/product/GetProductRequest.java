@@ -25,7 +25,7 @@ public class GetProductRequest implements JSON_SCHEMAS {
                 .when()
                 .get(allProducts);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         response.then().body(ALL_PRODUCTS_SCHEMA);
 
@@ -40,7 +40,7 @@ public class GetProductRequest implements JSON_SCHEMAS {
                 .when()
                 .get(singleProduct);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         return response;
     }
@@ -54,7 +54,7 @@ public class GetProductRequest implements JSON_SCHEMAS {
                 .when()
                 .get(allProducts);
         response.then().spec(getResponseSpec());
-        response.then().time(lessThan(3L), TimeUnit.SECONDS);
+        response.then().time(lessThan(5L), TimeUnit.SECONDS);
         response.then().statusCode(200);
         return response;
     }

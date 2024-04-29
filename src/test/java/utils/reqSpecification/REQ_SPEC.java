@@ -1,5 +1,7 @@
 package utils.reqSpecification;
 
+import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.LogConfig;
@@ -25,6 +27,7 @@ public interface REQ_SPEC {
                 .log(LogDetail.PARAMS)
                 .log(LogDetail.COOKIES)
                 .setConfig(restAssuredConfig)
-                .build();
+                .build()
+                .filter(new AllureRestAssured());
     }
 }

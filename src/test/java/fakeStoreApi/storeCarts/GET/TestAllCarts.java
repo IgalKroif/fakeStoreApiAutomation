@@ -2,6 +2,8 @@ package fakeStoreApi.storeCarts.GET;
 
 import CreateRequest.cart.GetCartRequest;
 import groovy.util.logging.Slf4j;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +15,6 @@ import org.testng.annotations.AfterMethod;
 import utils.CONSTANTS.CONSTANTS;
 import utils.pojo.cart.Items;
 import utils.pojo.cart.Product;
-
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -130,6 +131,8 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     @Test
     @Tags({@Tag("Carts"), @Tag("UserID")})
     @DisplayName("assert user ID'S in all carts")
+    @Description("Asserts user ID's in all carts")
+    @Step
     public void assertAllUserIdsInCart() {
         Response response = testAllCarts();
         var items = response.as(Items[].class);

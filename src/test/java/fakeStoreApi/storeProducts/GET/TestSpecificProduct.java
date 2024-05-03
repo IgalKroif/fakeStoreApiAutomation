@@ -2,6 +2,10 @@ package fakeStoreApi.storeProducts.GET;
 
 import CreateRequest.product.GetProductRequest;
 
+import groovy.util.logging.Slf4j;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
@@ -15,13 +19,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.validation.Fields.StaticFieldValidator.validateInt;
 import static utils.validation.dataRandomizer.NumberRandomizer.generateRandInt;
 
+@Slf4j
+@Feature("GET METHOD : PRODUCTS ENDPOINT")
 public class TestSpecificProduct extends GetProductRequest implements CONSTANTS {
 
     public final Logger logger = LoggerFactory.getLogger(TestSpecificProduct.class);
 
     @DisplayName("Testing specific product ID")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Testing specific product ID {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT by ID")
+    @Step
     public void testSpecificProductId() {
         var response = super.getProducts(generateRandInt(1, 20));
 
@@ -37,7 +45,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
      */
     @DisplayName("Testing specific product NAME")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Testing specific product NAME {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT NAME")
+    @Step
     public void testSpecificProductName() {
         int randomId = generateRandInt(1, 20);
         var response = super.getProducts(randomId);
@@ -53,7 +63,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
 
     @DisplayName("Testing specific product PRICE")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10,name = "Testing specific product PRICE {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT PRICE")
+    @Step
     public void testSpecificProductPrice() {
         var response = super.getProducts(generateRandInt(1, 20));
         var product = response.as(Products.class);
@@ -68,7 +80,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
 
     @DisplayName("Testing specific product DESCRIPTION")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(10)
+    @RepeatedTest(value = 35, name = "Testing specific product DESCRIPTION {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT DESCRIPTION")
+    @Step
     public void testSpecificProductDescription() {
         var response = super.getProducts(generateRandInt(1, 20));
         var product = response.as(Products.class);
@@ -82,7 +96,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
 
     @DisplayName("Testing specific product CATEGORY")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(15)
+    @RepeatedTest(value = 15, name = "Testing specific product CATEGORY {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT CATEGORY")
+    @Step
     public void testSpecificProductCategory() {
         var response = super.getProducts(generateRandInt(1, 20));
         var product = response.as(Products.class);
@@ -96,7 +112,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
 
     @DisplayName("Testing specific product IMAGE")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(15)
+    @RepeatedTest(value = 15,name = "Testing specific product IMAGE {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT IMAGE")
+    @Step
     public void testSpecificProductImage() {
         var response = super.getProducts(generateRandInt(1, 20));
         var product = response.as(Products.class);
@@ -110,7 +128,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
 
     @DisplayName("Testing specific product RATING AND COUNT")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(30)
+    @RepeatedTest(value = 30, name = "Testing specific product RATING AND COUNT {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT RATING AND COUNT")
+    @Step
     public void testSpecificProductRating() {
         var response = super.getProducts(generateRandInt(1, 20));
         var product = response.as(Products.class);
@@ -131,7 +151,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
      */
     @DisplayName("Testing specific product using positive wrong id!")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Testing specific product using positive wrong id! {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT using positive wrong id!")
+    @Step
     public void testSpecificProductWrongId() {
         var response = super.getProducts(generateRandInt(21, 999));
         logData(response, "WrongId");
@@ -143,7 +165,9 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
      */
     @DisplayName("Testing specific product using negative wrong id!")
     @Tags({@Tag("Products"), @Tag("GET")})
-    @RepeatedTest(30)
+    @RepeatedTest(value = 30, name = "Testing specific product using negative wrong id! {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC PRODUCT using negative wrong id!")
+    @Step
     public void testSpecificProductNegativeWrongId() {
         var response = super.getProducts(generateRandInt(-1000, 0));
         logData(response, "WrongId");

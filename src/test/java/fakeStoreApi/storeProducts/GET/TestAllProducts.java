@@ -1,6 +1,10 @@
 package fakeStoreApi.storeProducts.GET;
 
 import CreateRequest.product.GetProductRequest;
+import groovy.util.logging.Slf4j;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.validation.Fields.StaticFieldValidator.*;
 import static utils.validation.dataRandomizer.NumberRandomizer.generateRandInt;
 
+@Slf4j
+@Feature("GET METHOD : PRODUCTS ENDPOINT")
 public class TestAllProducts extends GetProductRequest implements CONSTANTS {
 
     public final Logger logger = LoggerFactory.getLogger(TestAllProducts.class);
@@ -36,6 +42,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Testing all product IDs")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCTS")
+    @Step
     public void testAllProductIds() {
         var response = super.getProducts();
 
@@ -52,6 +60,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Testing all product titles")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCT TITLES")
+    @Step
     public void testAllProductTitles() {
         var response = super.getProducts();
 
@@ -66,6 +76,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Testing all product prices")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCT PRICES")
+    @Step
     public void testAllProductPrices() {
         var response = super.getProducts();
 
@@ -90,6 +102,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Testing all product descriptions")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCT DESCRIPTIONS")
+    @Step
     public void testAllProductDescriptions() {
         var response = super.getProducts();
 
@@ -105,6 +119,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Testing all product categories")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCT CATEGORIES")
+    @Step
     public void testAllProductCategories() {
         var response = super.getProducts();
 
@@ -119,6 +135,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Testing all product images")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCT IMAGES")
+    @Step
     public void testAllProductImages() {
         var response = super.getProducts();
 
@@ -134,6 +152,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Testing all product ratings")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCT RATINGS")
+    @Step
     public void testAllProductRatings() {
         var response = super.getProducts();
 
@@ -165,6 +185,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Test Sorted Products by DESCENDING order")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCTS BY DESCENDING ORDER")
+    @Step
     public void testSortedProductsByDescendingOrder() {
         var response = super.getProducts("desc", null);
 
@@ -178,6 +200,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @Test
     @DisplayName("Test Sorted Products by ASCENDING order")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCTS BY ASCENDING ORDER")
+    @Step
     public void testSortedProductsByAscendingOrder() {
         var response = super.getProducts("asc", null);
 
@@ -191,6 +215,8 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     @RepeatedTest(20)
     @DisplayName("Test Sorted Products with limit")
     @Tags({@Tag("Products"), @Tag("GET")})
+    @Epic("GET ALL PRODUCTS WITH REQUEST LIMIT")
+    @Step
     public void testSortedProductsWithLimit() {
         var randLimit = generateRandInt(1, 20);
         var response = super.getProducts("asc", randLimit);
@@ -204,6 +230,7 @@ public class TestAllProducts extends GetProductRequest implements CONSTANTS {
     public void logProductIds(List<Object> productList) {
         logger.info("Product List field: {}\nSize of array: {}\n", productList, productList.size());
     }
+
     public void logProductIds(List<Object> productList, String fieldName) {
         logger.info("Product List{} field: {}\nSize of array: {}\n", fieldName, productList, productList.size());
     }

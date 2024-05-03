@@ -1,5 +1,6 @@
 package utils.reqSpecification;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.LogConfig;
@@ -28,6 +29,7 @@ public class SpecifyRequest {
                 .log(LogDetail.COOKIES)
                 .setContentType(ContentType.JSON)
                 .setConfig(restAssuredConfig)
-                .build();
+                .build()
+                .filter(new AllureRestAssured());
     }
 }

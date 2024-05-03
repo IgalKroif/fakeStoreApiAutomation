@@ -2,9 +2,12 @@ package fakeStoreApi.storeCarts.GET;
 
 import CreateRequest.cart.GetCartRequest;
 import groovy.util.logging.Slf4j;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
-import lombok.extern.log4j.Log4j2;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,8 +28,8 @@ import static utils.validation.dataRandomizer.NumberRandomizer.generateRandInt;
 import static utils.populateCsvData.InjectData.populateInvalidIds;
 import static utils.populateCsvData.InjectData.populateValidIds;
 
-@Log4j2
 @Slf4j
+@Feature("GET METHOD : CARTS ENDPOINT")
 public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
     public final Logger logger = LoggerFactory.getLogger(TestSpecificCart.class);
 
@@ -40,6 +43,8 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/CSVS/CART_IDS.csv", numLinesToSkip = 1)
+    @DisplayName("Assert Different Cart Ids")
+    @Epic("GET SPECIFIC ITEM IN CART")
     public void assertValidSpecificCartIds(int cartId) {
         // Call the testSpecificCart method with the populated valid IDs
         Response response = testSpecificCart(populateValidIds(cartId));
@@ -67,9 +72,12 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/CSVS/INVALID_CART_ID_DATA.csv", numLinesToSkip = 1)
+    @Epic("GET SPECIFIC ITEM IN CART")
+    @DisplayName("Assert different Invalid Cart Ids")
     public void testSpecificCartWithInvalidId(Object cartId) {
         // Send request with invalid ID and get the response
         Response response = testInvalidSpecificCart(populateInvalidIds(cartId));
+        response.then().log().body();
 
         // Get status code and response body
         var statusCode = response.getStatusCode();
@@ -89,8 +97,10 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
         logCart(logger, "Tested cartId: " + cartId + " with status: " + response.getStatusLine());
     }
 
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Assert specific cart with specific ID {currentRepetition} of {totalRepetitions}")
     @DisplayName("Assert specific cart ID")
+    @Epic("GET SPECIFIC ITEM IN CART")
+    @Step
     public void specificCartIdTest() {
         var cartId = generateRandInt();
         Response response = testSpecificCart(cartId);
@@ -106,6 +116,8 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
  * */
     @RepeatedTest(10)
     @DisplayName("Assert specific cart with userId and date")
+    @Epic("GET SPECIFIC ITEM IN CART")
+    @Step
     public void testSpecificCartUserIdAndDate() {
         var cartId = generateRandInt();
         Response response = testSpecificCart(cartId);
@@ -118,7 +130,9 @@ public class TestSpecificCart extends GetCartRequest implements JSON_SCHEMAS {
      * Test the products in a specific cart by generating a random cart ID, making a request to the API,
      * validating the response, and asserting the products in the cart.
      */
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Assert products in specific cart {currentRepetition} of {totalRepetitions}")
+    @Epic("GET SPECIFIC ITEM IN CART")
+    @DisplayName("Assert products in specific cart")
     public void testProductsInSpecificCart() {
         // Generate a random cart ID
         var cartId = generateRandInt();

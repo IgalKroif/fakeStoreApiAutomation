@@ -1,6 +1,10 @@
 package fakeStoreApi.storeCarts.POST;
 
 import CreateRequest.cart.PostCartRequest;
+import groovy.util.logging.Slf4j;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.RepeatedTest;
 import utils.CONSTANTS.JSON_SCHEMAS;
 
@@ -11,12 +15,16 @@ import static utils.validation.Fields.StaticFieldValidator.validateCreatedCart;
 import static utils.validation.dataRandomizer.NumberRandomizer.generateRandInt;
 import static utils.validation.dataRandomizer.StringRandomizer.generateRandDate;
 
+@Slf4j
+@Feature("POST METHOD : CARTS ENDPOINT")
 public class AddToCartTest extends PostCartRequest implements JSON_SCHEMAS {
 
     /**
      * A test to add to the cart using all available fields.
      */
-    @RepeatedTest(25)
+    @RepeatedTest(value = 25, name = "Add to cart with all fields {currentRepetition} of {totalRepetitions}")
+    @Epic("ADD TO CART USING ALL FIELDS")
+    @Step
     public void addToCartUsingAllFieldsTest() {
         var randomUserId = generateRandInt(10, 99_999_999);
         var randomDate = generateRandDate();
@@ -31,7 +39,9 @@ public class AddToCartTest extends PostCartRequest implements JSON_SCHEMAS {
     /**
      * Test for adding to cart using user ID.
      */
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Add to cart with user ID {currentRepetition} of {totalRepetitions}")
+    @Epic("ADD TO CART USING USER ID")
+    @Step
     public void addToCartUsingUserIdTest() {
         var randomUserId = generateRandInt(10, 99_999_999);
         var response = super.addNewCartWithAllBodyFields(randomUserId, 0, 0, 0);
@@ -41,7 +51,9 @@ public class AddToCartTest extends PostCartRequest implements JSON_SCHEMAS {
     /**
      * Test method for adding to cart using a random date.
      */
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Add to cart with date {currentRepetition} of {totalRepetitions}")
+    @Epic("ADD TO CART USING DATE")
+    @Step
     public void addToCartUsingDateTest() {
         var randomDate = generateRandDate();
         var response = super.addNewCartWithAllBodyFields(null, randomDate, null, null);
@@ -55,7 +67,8 @@ public class AddToCartTest extends PostCartRequest implements JSON_SCHEMAS {
      * @return No return value
      * @RepeatedTest(10)
      */
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Add to cart with product ID {currentRepetition} of {totalRepetitions}")
+    @Epic("ADD TO CART USING PRODUCT ID")
     public void addToCartUsingProductIdTest() {
         var randomProductId = generateRandInt(1, Integer.MAX_VALUE);
         var response = super.addNewCartWithAllBodyFields(null, null, randomProductId, null);
@@ -66,7 +79,9 @@ public class AddToCartTest extends PostCartRequest implements JSON_SCHEMAS {
     /**
      * Test for adding to cart using a specific quantity.
      */
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Add to cart with quantity {currentRepetition} of {totalRepetitions}")
+    @Epic("ADD TO CART USING QUANTITY")
+    @Step
     public void addToCartUsingQuantityTest() {
         var randomQuantity = generateRandInt(0, generateRandInt(1, 99_999_999));
         var response = super.addNewCartWithAllBodyFields(null, null, null, randomQuantity);
@@ -79,7 +94,9 @@ public class AddToCartTest extends PostCartRequest implements JSON_SCHEMAS {
      *
      * @return description of return value
      */
-    @RepeatedTest(10)
+    @RepeatedTest(value = 10, name = "Add to cart with all null {currentRepetition} of {totalRepetitions}")
+    @Epic("ADD TO CART WITH ALL NULL")
+    @Step
     public void addToCartAllNull() {
         var response = super.addNewCartWithAllBodyFields(null, null, null, null);
 

@@ -3,6 +3,8 @@ package fakeStoreApi.storeCarts.GET;
 import CreateRequest.cart.GetCartRequest;
 import groovy.util.logging.Slf4j;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
@@ -15,6 +17,7 @@ import org.testng.annotations.AfterMethod;
 import utils.CONSTANTS.CONSTANTS;
 import utils.pojo.cart.Items;
 import utils.pojo.cart.Product;
+
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -26,6 +29,7 @@ import static utils.validation.Fields.StaticFieldValidator.validateString;
  * The type Test all carts.
  */
 @Slf4j
+@Feature("GET METHOD : CARTS ENDPOINT")
 public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     public final Logger logger = LoggerFactory.getLogger(TestAllCarts.class);
 
@@ -43,6 +47,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     @Test
     @Tags({@Tag("Carts"), @Tag("CartId")})
     @DisplayName("assert IDS in all carts")
+    @Epic("ALL CART ITEMS")
     public void assertAllCartIds() {
         Response response = testAllCarts();
         var items = response.as(Items[].class);
@@ -62,11 +67,14 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
      * @param limitParam The limit parameter to test.
      */
     @ParameterizedTest()
-    @ValueSource(ints = {100,8,7,6,5,4,3,2,1,0,-1})
+    @ValueSource(ints = {100, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1})
     @Tags({@Tag("Carts"), @Tag("CartId")})
     @DisplayName("Assert Descending queryParameter")
+    @Epic("ALL CART ITEMS")
+    @Step
     public void assertDescSortAndLimitCartParams(int limitParam) {
         // Call the testAllCarts method with the specified parameters
+        clearList();
         Response response = testAllCarts(byDesc, limitParam);
 
         // Parse the response as an array of Items
@@ -93,11 +101,14 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
      * @param limitParam The limit parameter for the test.
      */
     @ParameterizedTest()
-    @ValueSource(ints = {-1 ,0, 1, 2, 3, 4, 5, 6, 7, 8, 50000})
+    @ValueSource(ints = {-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 50000})
     @Tags({@Tag("Carts"), @Tag("CartId")})
     @DisplayName("Assert Ascending queryParameter")
+    @Epic("ALL CART ITEMS")
+    @Step
 
     public void assertAscSortAndLimitCartParams(int limitParam) {
+
         // Call testAllCarts method with specified sort and limit parameters
         Response response = testAllCarts(byAsc, limitParam);
         // Convert response to Items array
@@ -133,6 +144,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     @DisplayName("assert user ID'S in all carts")
     @Description("Asserts user ID's in all carts")
     @Step
+    @Epic("ALL CART ITEMS")
     public void assertAllUserIdsInCart() {
         Response response = testAllCarts();
         var items = response.as(Items[].class);
@@ -142,16 +154,17 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
             assertThat(item.getUserId()).isGreaterThan(0);
             validateInt().intGreaterEqualTo(item.getId(), 1, 1, 8);
         }
-        logger.info("userIds: " + userIds + "\n" + "userIds array size:" + userIds.size() + "\n");
+        logger.info("userIds: {}\nuserIds array size:{}\n", userIds, userIds.size());
     }
 
     /**
      * assert item date in cart
-     *
      */
     @Test
     @Tags({@Tag("Carts"), @Tag("ItemCartDate")})
     @DisplayName("assert item creation date in all carts")
+    @Epic("ALL CART ITEMS")
+    @Step
     public void assertAllItemCartDate() {
         Response response = testAllCarts();
         var items = response.as(Items[].class);
@@ -159,8 +172,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
             cartDates.add(item.getDate());
             validateString().stringLengthGTE(item.getDate(), 24);
         }
-        logger.info("Cart creation dates: " + cartDates + "\n" +
-                "Size of array: " + cartDates.size() + "\n");
+        logger.info("Cart creation dates: {}\nSize of array: {}\n", cartDates, cartDates.size());
     }
 
     /**
@@ -171,6 +183,8 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     @Test
     @Tags({@Tag("Carts"), @Tag("ItemCartDate")})
     @DisplayName("Assert product IDs in all carts")
+    @Epic("ALL CART ITEMS")
+    @Step
     public void assertAllProductIdsInCarts() {
         // Retrieve the response from the testAllCarts method
         Response response = testAllCarts();
@@ -191,8 +205,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
             }
         }
         // Log the product IDs and the size of the array
-        logger.info("Carts product ids: " + productIds + "\n" +
-                "Size of array: " + productIds.size() + "\n");
+        logger.info("Carts product ids: {}\nSize of array: {}\n", productIds, productIds.size());
     }
 
     /**
@@ -201,6 +214,8 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
     @Test
     @Tags({@Tag("Carts"), @Tag("ItemCartDate")})
     @DisplayName("assert product quantities in all carts")
+    @Epic("ALL CART ITEMS")
+    @Step
     public void assertAllProductQuantitiesInCarts() {
         // Send a request to get all carts
         Response response = testAllCarts();
@@ -220,20 +235,21 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
             }
         }
         // Log the added quantities and the size of the array
-        logger.info("Cart added quantities: " + productQuantity + "\n" +
-                "Size of array: " + productQuantity.size() + "\n");
+        logger.info("Cart added quantities: {}\nSize of array: {}\n", productQuantity, productQuantity.size());
     }
 
     /**
      * Asserts the cart by date query parameters.
      *
-     * @param  startDate  the start date for the cart
-     * @param  endDate    the end date for the cart
+     * @param startDate the start date for the cart
+     * @param endDate   the end date for the cart
      */
     @Tags({@Tag("Carts"), @Tag("CartId")})
     @ParameterizedTest
     @CsvFileSource(resources = "/CSVS/DIFFERENT_DATES.csv", numLinesToSkip = 1)
     @DisplayName("Assert Cart by date queryParameters")
+    @Epic("ALL CART ITEMS")
+    @Step
     public void assertSortCartByDateParams(String startDate, String endDate) {
         if (startDate == null || startDate.isEmpty()) {
             startDate = "0001-01-01";
@@ -263,18 +279,19 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
                 // Log the IDs and the size of the ID array
                 logResponse();
             } else {
-                logger.info("No items found in the response due to wrong date range : " + startDate + " - " + endDate);
+                logger.info("No items found in the response due to wrong date range : {} - {}", startDate, endDate);
             }
         }
         if (response.statusCode() == 400) {
 
-            logger.info("Bad Request: " + expectedErrorMessage);
+            logger.info("Bad Request: {}", expectedErrorMessage);
             response.then().body("status", equalTo("error"));
             response.then().body("message", equalTo(expectedErrorMessage));
         }
         // Clear the list of IDs
         clearList();
     }
+
     private void logResponse() {
         logger.info("ids: {}\nid array size:{}\n", ids, ids.size());
     }

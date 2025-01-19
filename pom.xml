@@ -150,26 +150,33 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.16.1</version>
+            <version>1.17.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.gatling/gatling-test-framework -->
         <dependency>
             <groupId>io.gatling</groupId>
             <artifactId>gatling-test-framework</artifactId>
-            <version>3.10.4</version>
+            <version>3.11.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.gatling.highcharts/gatling-charts-highcharts -->
         <dependency>
             <groupId>io.gatling.highcharts</groupId>
             <artifactId>gatling-charts-highcharts</artifactId>
-            <version>3.10.4</version>
+            <version>3.11.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.gatling/gatling-core -->
         <dependency>
             <groupId>io.gatling</groupId>
             <artifactId>gatling-core</artifactId>
-            <version>3.10.4</version>
+            <version>3.11.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.gatling/gatling-maven-plugin -->
+        <dependency>
+            <groupId>io.gatling</groupId>
+            <artifactId>gatling-maven-plugin</artifactId>
+            <version>4.9.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.maven/maven-core -->
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -267,4 +274,11 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
 </project>

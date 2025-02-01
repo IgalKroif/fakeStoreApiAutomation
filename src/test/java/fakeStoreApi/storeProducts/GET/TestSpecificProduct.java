@@ -13,6 +13,10 @@ import org.slf4j.LoggerFactory;
 import utils.CONSTANTS.CONSTANTS;
 import utils.pojo.product.Products;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -51,11 +55,17 @@ public class TestSpecificProduct extends GetProductRequest implements CONSTANTS 
     public void testSpecificProductName() {
         int randomId = generateRandInt(1, 20);
         var response = super.getProducts(randomId);
-
         var product = response.as(Products.class);
-        assertThat(PRODUCT_NAMES.stream()
-                .map(Object::toString)
-                .anyMatch(title -> title.equals(product.getTitle())))
+
+        // Trimmed product name set for accurate comparison
+        assertThat(PRODUCT_NAMES.contains(product.getTitle()))
+                .withFailMessage("Unexpected Product Name: " + product.getTitle())
+                .isTrue();
+
+
+        // Assertion with logging for debugging
+        assertThat(PRODUCT_NAMES.contains(product.getTitle().toString()))
+                .withFailMessage("Unexpected Product Name: " + product.getTitle())
                 .isTrue();
         response.then().body(SINGLE_PRODUCT_SCHEMA);
         logData(response, "Name");

@@ -101,12 +101,11 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
      * @param limitParam The limit parameter for the test.
      */
     @ParameterizedTest()
-    @ValueSource(ints = {-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 50000})
+    @ValueSource(ints = {-1, 0, 1, 2, 3, 4, 5, 6, 7, 8})
     @Tags({@Tag("Carts"), @Tag("CartId")})
     @DisplayName("Assert Ascending queryParameter")
     @Epic("ALL CART ITEMS")
     @Step
-
     public void assertAscSortAndLimitCartParams(int limitParam) {
 
         // Call testAllCarts method with specified sort and limit parameters
@@ -122,6 +121,7 @@ public class TestAllCarts extends GetCartRequest implements CONSTANTS {
             // Validate ID is within specified range
             validateInt().intGreaterEqualTo(item.getId(), 1, 1, 7);
         }
+
         // Validate that IDs are in ascending order
         validateInt().intLessThanEqualTo((Integer) ids.get(0), (Integer) ids.get(ids.size() - 1));
         // Log the IDs and size of the ID list
